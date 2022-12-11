@@ -31,7 +31,7 @@ function createPromise(position, delay) {
     );
 }
 
-promiseStep=(delay, step, amount) => {
+const promiseStep=(delay, step, amount) => {
   let time = 0;
   for (let i = 1; i <= amount; i += 1) {
     if (i) {
