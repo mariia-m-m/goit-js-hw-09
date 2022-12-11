@@ -6,6 +6,7 @@ btnStart.addEventListener("click", onBtnStart)
 btnStop.addEventListener('click', onBtnStop)
 let Interval = null;
 
+btnStart.disabled = false;
 
 function onBtnStart() {
     Interval =

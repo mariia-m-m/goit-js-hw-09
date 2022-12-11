@@ -43,7 +43,7 @@ function changeTimerValue() {
         const currentTime = new Date();
         const deltaTime = startTime - currentTime;
         btnStart.disabled = true;
-        console.log(deltaTime);
+        // console.log(deltaTime);
         if (deltaTime >= 0) {
             let timerData = convertMs(deltaTime);
             timerValues.days.textContent = timerData.days;
