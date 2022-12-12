@@ -21,7 +21,6 @@ function onSubmit (event) {
     console.log(`❌ Rejected promise ${position} in ${delay}ms`);
   });
   console.log(delayValue, stepValue, amountValue);
-  // promiseStep(delayValue, stepValue, amountValue);
   cickleMaker(delay,step,amount);
   clearInput();
 }
@@ -64,13 +63,4 @@ function clearInput() {
 }
 
 
-
-// count += 1;
-//   }, 1000);
-// });
-
-//  if (count===5) {
-//     clearInterval(intervalID);
-//     console.log(`Interval with id ${intervalID} has stopped!`);
-//   }
 
