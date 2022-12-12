@@ -3,8 +3,28 @@
 const delay = document.querySelector('input[name = "delay"]');
 const step = document.querySelector('input[name = "step"]')
 const amount = document.querySelector('input[name = "amount"]');
-const form = document.querySelector("form")
+const form = document.querySelector("form");
 
+
+form.addEventListener('submit', onSubmit)
+
+function onSubmit (event) {
+  event.preventDefault();
+  const delayValue = delay.value;
+  const stepValue = step.value;
+  const amountValue = amount.value;
+  createPromise()
+  .then(({ position, delay }) => {
+    console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+  })
+  .catch(({ position, delay }) => {
+    console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+  });
+  console.log(delayValue, stepValue, amountValue);
+  // promiseStep(delayValue, stepValue, amountValue);
+  cickleMaker(delay,step,amount);
+  clearInput();
+}
 
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
@@ -19,37 +39,30 @@ function createPromise(position, delay) {
         reject({ position, delay })
       }
     }, delay);
-
   })
-    .then(({ position, delay }) => {
-      console.log(`✅Fulfilled promise ${position} in ${delay}ms`)
-      return { position, delay };
-    })
-    .catch(({ position, delay }) => {
-      console.log(`❌Rejected ptomise ${position} in${delay}ms`)
-    }
-    );
 }
 
-const promiseStep=(delay, step, amount) => {
+
+
+const cickleMaker = () => {
   let time = 0;
-  for (let i = 1; i <= amount; i += 1) {
-    if (i) {
-      time = Number(time)+Number(step)
+  for (let i = 1; i < amount; i += 1) {
+    if (i === 1) {
+      time = delay;
+    }else{
+      time = time + step.value;
     }
-    createPromise(i, time);
+     createPromise(i,time);
   }
+
 }
 
-const onSubmit = event => {
-  event.preventDefault();
-  const delayValue = delay.value;
-  const stepValue = step.value;
-  const amountValue = amount.value;
-  console.log(delayValue, stepValue, amountValue);
-  promiseStep(delayValue, stepValue, amountValue);
+function clearInput() {
+  delay.value = ``;
+  step.value= ``;
+  amount.value = ``;
 }
-form.addEventListener('submit',onSubmit)
+
 
 
 // count += 1;
