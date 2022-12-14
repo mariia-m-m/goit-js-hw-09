@@ -1,29 +1,9 @@
 // const { formats } = require("flatpickr/dist/utils/formatting");
 
-const delay = document.querySelector('input[name = "delay"]');
-const step = document.querySelector('input[name = "step"]')
-const amount = document.querySelector('input[name = "amount"]');
-const form = document.querySelector("form");
-
-
-form.addEventListener('submit', onSubmit)
-
-function onSubmit (event) {
-  event.preventDefault();
-  const delayValue = delay.value;
-  const stepValue = step.value;
-  const amountValue = amount.value;
-  createPromise()
-  .then(({ position, delay }) => {
-    console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-  })
-  .catch(({ position, delay }) => {
-    console.log(`❌ Rejected promise ${position} in ${delay}ms`);
-  });
-  console.log(delayValue, stepValue, amountValue);
-  cickleMaker(delay,step,amount);
-  clearInput();
-}
+const delayInput = document.querySelector('input[name = "delay"]');
+const stepInput = document.querySelector('input[name = "step"]')
+const amountInput = document.querySelector('input[name = "amount"]');
+const form = document.querySelector(".form");
 
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
@@ -41,25 +21,43 @@ function createPromise(position, delay) {
   })
 }
 
+form.addEventListener('submit', onSubmit)
 
-
-const cickleMaker = () => {
-  let time = 0;
-  for (let i = 1; i < amount; i += 1) {
-    if (i === 1) {
-      time = delay;
-    }else{
-      time = time + step.value;
-    }
-     createPromise(i,time);
+function onSubmit(event) {
+  event.preventDefault();
+  const formEl = event.currentTarget.elements;
+  let delay = Number(formEl.delay.value);
+  let step = Number(formEl.step.value);
+  let amount = Number(formEl.amount.value);
+  
+  // const cickleMaker = () => {
+  //   let time = 0;
+  for (let position = 1; position <= amount; position += 1) {
+    createPromise(position, delay)
+      .then(({ position, delay }) => {
+        console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      })
+      .catch(({ position, delay }) => {
+        console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+      });
+    // if (amount === 1) {
+    //   delay = delay;
+    // }else{
+    //   delay=delay + step;
+    // }
+    delay += step;
   }
-
+  console.log(delayInput.value,stepInput.value,amountInput.value)
+     clearInput(); 
 }
 
+
+
+  
 function clearInput() {
-  delay.value = ``;
-  step.value= ``;
-  amount.value = ``;
+  delayInput.value = ``;
+  stepInput.value= ``;
+  amountInput.value = ``;
 }
 
 
